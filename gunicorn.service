@@ -1,0 +1,20 @@
+[Unit]
+Description=Gunicorn daemon for filipmercep Django application
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/filipmercep
+Environment="PATH=/var/www/filipmercep/venv/bin"
+EnvironmentFile=/var/www/filipmercep/.env
+ExecStart=/var/www/filipmercep/venv/bin/gunicorn \
+    --workers 3 \
+    --bind unix:/var/www/filipmercep/gunicorn.sock \
+    --timeout 60 \
+    --access-logfile /var/www/filipmercep/logs/gunicorn-access.log \
+    --error-logfile /var/www/filipmercep/logs/gunicorn-error.log \
+    filipmercep.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

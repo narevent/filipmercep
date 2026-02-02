@@ -1,0 +1,88 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Projects - Filip Merčep{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Projects</h1>
+        <p class="page-subtitle">Exploring music, technology, and artistic innovation</p>
+    </div>
+</section>
+
+<section class="projects-section">
+    <div class="container">
+        {% if projects %}
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                {% if project.youtube_embed %}
+                <div class="project-media">
+                    <div class="video-container">
+                        <iframe 
+                            src="https://www.youtube.com/embed/{{ project.youtube_embed }}" 
+                            title="{{ project.title }}"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                {% elif project.image %}
+                <div class="project-media">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                </div>
+                {% endif %}
+                
+                <div class="project-content">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    {% if project.external_link %}
+                    <a href="{{ project.external_link }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                        Learn more →
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-projects">
+            <p>Projects coming soon. Stay tuned for updates on innovative musical explorations.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="project-highlight">
+    <div class="container">
+        <div class="highlight-content">
+            <h2>DigitalTwin Duo</h2>
+            <p>
+                Filip founded the DigitalTwin duo, an innovative project that develops experiences at the intersection of music, artificial intelligence, and video games. This groundbreaking work explores new frontiers in percussion performance and digital creativity.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="collaborations">
+    <div class="container">
+        <h2 class="section-title">Featured Collaborations</h2>
+        <div class="collab-grid">
+            <div class="collab-card">
+                <h3>Sudar Percussion Ensemble</h3>
+                <p>Musical ensemble active since 2010, combining acoustic instruments, electronics, and ethnic music in innovative projects.</p>
+            </div>
+            <div class="collab-card">
+                <h3>Marimba Quartet</h3>
+                <p>Collaboration with renowned marimba soloist Katarzyna Mycka, exploring the full potential of marimba performance.</p>
+            </div>
+            <div class="collab-card">
+                <h3>Live Electronics Workshop</h3>
+                <p>Hosting annual workshops in Croatia since 2019, bringing together musicians and technology enthusiasts.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

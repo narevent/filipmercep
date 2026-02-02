@@ -1,0 +1,34 @@
+<!-- CONCERTS.HTML -->
+{% extends 'website/base.html' %}
+{% block title %}Concerts - Filip Merčep{% endblock %}
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Concerts</h1>
+        <p class="page-subtitle">Past and upcoming performances</p>
+    </div>
+</section>
+{% if upcoming_concerts %}
+<section class="concerts-section">
+    <div class="container">
+        <h2 class="section-title">Upcoming Concerts</h2>
+        <div class="concerts-list">
+            {% for concert in upcoming_concerts %}
+            <div class="concert-item">
+                <div class="concert-date-block">
+                    <span class="date-day">{{ concert.date|date:"d" }}</span>
+                    <span class="date-month">{{ concert.date|date:"M" }}</span>
+                    <span class="date-year">{{ concert.date|date:"Y" }}</span>
+                </div>
+                <div class="concert-details">
+                    <h3>{{ concert.title }}</h3>
+                    <p class="venue-info"><strong>{{ concert.venue }}</strong><br>{{ concert.city }}, {{ concert.country }}</p>
+                    {% if concert.description %}<p class="concert-description">{{ concert.description }}</p>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

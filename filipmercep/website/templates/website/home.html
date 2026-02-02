@@ -1,0 +1,102 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Filip Merčep</h1>
+        <p class="hero-subtitle">Percussion Artist & Creative Innovator</p>
+        <p class="hero-description">
+            Exploring the intersection of acoustic percussion, live electronics, and digital artistry
+        </p>
+        <div class="hero-cta">
+            <a href="{% url 'concerts' %}" class="btn btn-primary">Upcoming Concerts</a>
+            <a href="{% url 'projects' %}" class="btn btn-secondary">View Projects</a>
+        </div>
+    </div>
+</section>
+
+{% if featured_news %}
+<section class="featured-news">
+    <div class="container">
+        <div class="featured-card">
+            <span class="featured-label">Latest News</span>
+            <h2>{{ featured_news.title }}</h2>
+            <p class="featured-date">{{ featured_news.published_date|date:"F j, Y" }}</p>
+            <p>{{ featured_news.content|truncatewords:50 }}</p>
+            {% if featured_news.external_link %}
+            <a href="{{ featured_news.external_link }}" class="read-more" target="_blank">Read more →</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if upcoming_concerts %}
+<section class="upcoming-concerts">
+    <div class="container">
+        <h2 class="section-title">Upcoming Concerts</h2>
+        <div class="concerts-grid">
+            {% for concert in upcoming_concerts %}
+            <div class="concert-card">
+                <div class="concert-date">
+                    <span class="date-day">{{ concert.date|date:"d" }}</span>
+                    <span class="date-month">{{ concert.date|date:"M" }}</span>
+                    <span class="date-year">{{ concert.date|date:"Y" }}</span>
+                </div>
+                <div class="concert-info">
+                    <h3>{{ concert.title }}</h3>
+                    <p class="concert-venue">{{ concert.venue }}</p>
+                    <p class="concert-location">{{ concert.city }}, {{ concert.country }}</p>
+                    {% if concert.ticket_link %}
+                    <a href="{{ concert.ticket_link }}" class="concert-link" target="_blank">Get Tickets →</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="view-all">
+            <a href="{% url 'concerts' %}" class="btn btn-text">View All Concerts →</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="newsletter">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to receive news about concerts, new projects, and exclusive content.</p>
+            <form method="post" class="newsletter-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ newsletter_form.name }}
+                </div>
+                <div class="form-group">
+                    {{ newsletter_form.email }}
+                </div>
+                <button type="submit" name="newsletter_email" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% if recent_news %}
+<section class="recent-news">
+    <div class="container">
+        <h2 class="section-title">Recent News</h2>
+        <div class="news-grid">
+            {% for news in recent_news %}
+            <article class="news-item">
+                <p class="news-date">{{ news.published_date|date:"F j, Y" }}</p>
+                <h3>{{ news.title }}</h3>
+                <p>{{ news.content|truncatewords:30 }}</p>
+                {% if news.external_link %}
+                <a href="{{ news.external_link }}" class="read-more" target="_blank">Read more →</a>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'website/base.html' %}
+
+{% block title %}{{ about.title }} - Filip Merčep{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>{{ about.title }}</h1>
+        {% if about.subtitle %}
+        <p class="page-subtitle">{{ about.subtitle }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="about-content">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text">
+                {% if about.intro_text %}
+                <div class="intro-section">
+                    {{ about.intro_text|linebreaks }}
+                </div>
+                {% endif %}
+                
+                {% if about.biography %}
+                <div class="biography-section">
+                    {{ about.biography|linebreaks }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="about-highlights">
+                {% if awards %}
+                <div class="highlight-box">
+                    <h3>Awards & Recognition</h3>
+                    <ul>
+                        {% for award in awards %}
+                        <li>
+                            <strong>{{ award.title }}</strong> ({{ award.year }})
+                            {% if award.description %}
+                            <br><span class="award-desc">{{ award.description }}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if education %}
+                <div class="highlight-box">
+                    <h3>Education</h3>
+                    <ul>
+                        {% for edu in education %}
+                        <li>
+                            <strong>{{ edu.degree }}</strong><br>
+                            {{ edu.institution }}
+                            {% if edu.year_start and edu.year_end %}
+                            ({{ edu.year_start }}-{{ edu.year_end }})
+                            {% elif edu.year_end %}
+                            ({{ edu.year_end }})
+                            {% endif %}
+                            {% if edu.details %}
+                            <br><span class="edu-details">{{ edu.details }}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                {% if ensembles %}
+                <div class="highlight-box">
+                    <h3>Current Ensembles</h3>
+                    <ul>
+                        {% for ensemble in ensembles %}
+                        <li>
+                            <strong>{{ ensemble.name }}</strong>
+                            {% if ensemble.role %}
+                            <br><span class="ensemble-role">{{ ensemble.role }}</span>
+                            {% endif %}
+                            {% if ensemble.description %}
+                            <br><span class="ensemble-desc">{{ ensemble.description }}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if about.philosophy_quote %}
+<section class="philosophy">
+    <div class="container">
+        <blockquote class="quote-large">
+            {{ about.philosophy_quote }}
+        </blockquote>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -5,6 +5,7 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
+UMask=0007
 WorkingDirectory=/var/www/filipmercep
 Environment="PATH=/var/www/filipmercep/venv/bin"
 EnvironmentFile=/var/www/filipmercep/.env
